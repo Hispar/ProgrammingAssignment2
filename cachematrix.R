@@ -3,6 +3,8 @@
 
 ## stores the matrix in cache to avoid duplicated calculations
 makeCacheMatrix <- function(x = matrix()) {
+    ## set default inverse value as null
+    inv <- NULL
     ## save the matrix
     set <- function(y) {
            x <<- y
@@ -20,8 +22,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
-
+## This function receives a cacheMatrix object, and
+## returns its cached inverse if exists or calculate it
 cacheSolve <- function(x, ...) {
     ## check if x has inverse calculated
     inv <- x$getinverse()
@@ -30,8 +32,12 @@ cacheSolve <- function(x, ...) {
         message("getting cached data")
         return(inv)
     }
+    ## retrieve the matrix to calc the inverse
     data <- x$get()
+    ## solve return the inverse of the matrix
     inv <- solve(data, ...)
+    ## save the inverse into the cache
     x$setinverse(inv)
+    ## return the inverse
     inv
 }
